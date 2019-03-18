@@ -109,11 +109,10 @@ V <-matrix(V,3,3)
 require(YieldCurve)
 maturity 	<- c(3,6,9,12,15,18,21,24,30,36,48,60,72,84,96,108,120)
 NSParameters<- Nelson.Siegel( rate=data, maturity=maturity)
-NSParameters
+head(NSParameters)
+dim(NSParameters)
 var2 <- VAR(NSParameters, 1, type=c("const"),season = NULL, exogen = NULL)
 var22<-summary(var2)
-head(var22)
-dim(var22)
 
 # Comentário:
 # Há diferença entre os betas do pacote (YieldCurve) e os betas da função, pois o pacote tem um lambda para cada ETTJ, e a função 
