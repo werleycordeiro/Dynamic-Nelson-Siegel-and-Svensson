@@ -32,7 +32,7 @@ Z <- Svensson.factor.loadings(lambda1=lambda1,lambda2=lambda2,maturity=maturity)
 
 # Betas and Yhat function
 source("Yhat.betas.R")
-results <- NS(Y=data) 
+results <- Yhat.betas(Y=data) 
 head(results$beta)
 head(results$Yhat)
 
