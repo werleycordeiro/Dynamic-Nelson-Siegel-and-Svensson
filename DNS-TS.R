@@ -30,7 +30,7 @@ source("Nelson.Siegel.factor.loadings.R")
 Z <- Nelson.Siegel.factor.loadings(lambda=lambda,maturity=maturity)
 
 # Betas and Yhat
-source("NS.R")
+source("Yhat.betas.R")
 results <- NS(Y=data) 
 head(results$beta)
 head(results$Yhat)
