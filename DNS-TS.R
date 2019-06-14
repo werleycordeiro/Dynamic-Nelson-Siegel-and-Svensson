@@ -35,22 +35,6 @@ results <- Yhat.betas(Y=data)
 head(results$beta)
 head(results$Yhat)
 
-# Start point to pars$mu in Kalman-Filter-Dynamic-Nelson-Siegel
-mean(results$beta[,1]) 
-mean(results$beta[,2]) 
-mean(results$beta[,3])
-
-# Start point to pars$H in Kalman-Filter-Dynamic-Nelson-Siegel (variance matrix of residuals)
-sqrt(diag(var(data-results$Yhat))) 
-
-# Proxy to time-varying volatility (h_{t}). See Koopman,Malle,Var der Wel(2010), p.342, Fig.4, Panel(B)
-sigma<-c(rep(NA,348))
-  for(i in 1:348)
-    {
-      sigma[i]<- var(as.numeric((data-results$Yhat)[i,]))
-    }
-ts.plot(sigma)
-
 # VAR(1) coeffient matrix 
 source("VARcoeff.R")
 var<-VARcoeff(betas=results$beta) # Start point to pars$phi in Kalman-Filter-Dynamic-Nelson-Siegel
@@ -95,6 +79,14 @@ var22<-summary(var2)
 # There is a difference between the betas of the Package("YieldCurve") and the betas of the function NS
 # since the Package has a "time-varying" loading parameter (lambda) for each yield curve observed, 
 # and the function has only one fixed lambda (0.0609) for all observations.
+
+# Proxy to time-varying volatility (h_{t}). See Koopman,Malle,Var der Wel(2010), p.342, Fig.4, Panel(B)
+sigma<-c(rep(NA,348))
+  for(i in 1:348)
+    {
+      sigma[i]<- var(as.numeric((data-results$Yhat)[i,]))
+    }
+ts.plot(sigma)
 
 # Start point to DNS-baseline with Kalman filter
 para<-c(rep(NA,36))
