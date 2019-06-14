@@ -95,3 +95,32 @@ var22<-summary(var2)
 # There is a difference between the betas of the Package("YieldCurve") and the betas of the function NS
 # since the Package has a "time-varying" loading parameter (lambda) for each yield curve observed, 
 # and the function has only one fixed lambda (0.0609) for all observations.
+
+# Start point to DNS-baseline with Kalman filter
+para<-c(rep(NA,36))
+# Start point to lambda 
+para[1]<-lambda 
+# Start point to pars$H 
+para[2:18]<-sqrt(diag(var(data-results$Yhat))) 
+# Start point to pars$phi
+para[19]<-var[1,2]
+para[20]<-var[1,3]
+para[21]<-var[1,4]
+para[22]<-var[2,2]
+para[23]<-var[2,3]
+para[24]<-var[2,4]
+para[25]<-var[3,2]
+para[26]<-var[3,3]
+para[27]<-var[3,4]
+# Start point to pars$mu 
+para[28]<-mean(results$beta[,1]) 
+para[29]<-mean(results$beta[,2]) 
+para[30]<-mean(results$beta[,3])
+# Start to pars$Q
+QQ<-t(chol(var11$covres)) 
+para[31]<-QQ[1,1]
+para[32]<-QQ[2,1]
+para[33]<-QQ[2,2]
+para[34]<-QQ[3,1]
+para[35]<-QQ[3,2]
+para[36]<-QQ[3,3]
