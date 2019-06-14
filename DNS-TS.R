@@ -31,7 +31,7 @@ Z <- Nelson.Siegel.factor.loadings(lambda=lambda,maturity=maturity)
 
 # Betas and Yhat
 source("Yhat.betas.R")
-results <- NS(Y=data) 
+results <- Yhat.betas(Y=data) 
 head(results$beta)
 head(results$Yhat)
 
