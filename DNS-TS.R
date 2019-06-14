@@ -63,7 +63,7 @@ var2 <- VAR(NSParameters, 1, type=c("const"),season = NULL, exogen = NULL)
 var22<-summary(var2)
 
 # Comment:
-# There is a difference between the betas of the Package("YieldCurve") and the betas of the function NS
+# There is a difference between the betas of the Package("YieldCurve") and the betas of the function Yhat.betas
 # since the Package has a "time-varying" loading parameter (lambda) for each yield curve observed, 
 # and the function has only one fixed lambda (0.0609) for all observations.
 
