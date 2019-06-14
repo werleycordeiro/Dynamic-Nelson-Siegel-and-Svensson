@@ -53,19 +53,6 @@ var1 <- VAR(results$beta, 1, type=c("const"),season = NULL, exogen = NULL)
 var11<-summary(var1)
 var11$varresult
 
-# Start to pars$Q in Kalman-Filter-Dynamic-Nelson-Siegel
-t(chol(var11$covres)) 
-
-# Initials values for Kalman-Filter-Dynamic-Nelson-Siegel (Lyapunov equation) See Koopman,Malle,Var der Wel(2010), p.331
-# Variance matrix
-I <-diag(9)
-K <-var[,2:4]
-KK<-kronecker(K,K)
-J <-var11$covres
-JJ<-matrix(J,9,1)
-V <-solve(I - KK) %*% JJ
-V <-matrix(V,3,3)
-
 # Compare with Package("YieldCurve")
 require(YieldCurve)
 maturity 	<- c(3,6,9,12,15,18,21,24,30,36,48,60,72,84,96,108,120)
@@ -87,6 +74,16 @@ sigma<-c(rep(NA,348))
       sigma[i]<- var(as.numeric((data-results$Yhat)[i,]))
     }
 ts.plot(sigma)
+
+# Initials values for Kalman-Filter-Dynamic-Nelson-Siegel (Lyapunov equation) See Koopman,Malle,Var der Wel(2010), p.331
+# Variance matrix
+I <-diag(9)
+K <-var[,2:4]
+KK<-kronecker(K,K)
+J <-var11$covres
+JJ<-matrix(J,9,1)
+V <-solve(I - KK) %*% JJ
+V <-matrix(V,3,3)
 
 # Start point to DNS-baseline with Kalman filter
 para<-c(rep(NA,36))
