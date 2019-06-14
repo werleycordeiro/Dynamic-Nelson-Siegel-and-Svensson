@@ -39,8 +39,8 @@ head(results$Yhat)
 source("VARcoeff.R")
 var<-VARcoeff(betas=results$beta) # Start point to pars$phi in Kalman-Filter-Dynamic-Nelson-Siegel
 
-# Fitting the observation 348. Obs.: The VAR calculation was done on the whole sample,
-# so it would be used for forecasts on yields in observation 349.
+# It fits data 348. Obs.: I calculate the VAR coefficients matrix to the whole sample so that 
+# I can use for forecasts in observation 349, for example.
 
 betahat1 <- var[,2:4] %*% results$beta[347,]
 Yhat1 <- Z %*% betahat1
