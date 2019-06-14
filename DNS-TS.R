@@ -27,19 +27,19 @@ T <- length(maturity)
 maturity<-c(3,6,9,12,15,18,21,24,30,36,48,60,72,84,96,108,120) # 17 maturities in the data;
 lambda<- 0.0609 # loading parameter
 
-source("Nelson.Siegel.factor.loadings.R")
+#source("Nelson.Siegel.factor.loadings.R")
 # Loading matrix Lambda function
-#Nelson.Siegel.factor.loadings<-function(lambda,maturity) 
-#	{
-#	  column1<-rep.int(1,length(maturity))
-#	  column2<-(1-exp(-lambda*maturity))/(lambda*maturity)
-#	  column3<-column2-exp(-lambda*maturity)
-#	  
-#	  lambmat<-cbind(column1,column2,column3)
-#	  
-#	  lambmat
-#	}  
-#
+Nelson.Siegel.factor.loadings<-function(lambda,maturity) 
+	{
+	  column1<-rep.int(1,length(maturity))
+	  column2<-(1-exp(-lambda*maturity))/(lambda*maturity)
+	  column3<-column2-exp(-lambda*maturity)
+	  
+	  lambmat<-cbind(column1,column2,column3)
+	  
+	  lambmat
+	}  
+
 Z <- Nelson.Siegel.factor.loadings(lambda,maturity) # loading matrix
 
 # Betas and Yhat function
