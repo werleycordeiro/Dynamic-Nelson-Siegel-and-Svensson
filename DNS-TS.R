@@ -1,6 +1,6 @@
 # author: Werley Cordeiro
 # werleycordeiro@gmail.com
-# test from Rstudio 2
+
 # Packages
 list.of.packages <- c("highfrequency","vars","YieldCurve")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
