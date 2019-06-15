@@ -1,2 +1,4 @@
-# Dynamic-Nelson-Siegel-Svensson a la Diebold-Li
-Dynamic Nelson-Siegel: DNS-TS and Dynamic Nelson-Siegel-Svensson: DNSS-TS in two steps
+# Dynamic Nelson-Siegel and Svensson 
+a la Diebold,Li(2006) in two steps.<br />
+DNS-TS: Dynamic Nelson-Siegel two steps<br />
+DNSS-TS: Dynamic Nelson-Siegel-Svensson in two steps
