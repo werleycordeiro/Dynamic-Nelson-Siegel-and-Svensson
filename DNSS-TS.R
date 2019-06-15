@@ -36,29 +36,12 @@ results <- Yhat.betas(Y=data)
 head(results$beta)
 head(results$Yhat)
 
-# Start point to pars$mu 
-mean(results$beta[,1]) 
-mean(results$beta[,2]) 
-mean(results$beta[,3])
-mean(results$beta[,4])
-
-# Start point to pars$H 
-sqrt(diag(var(data-results$Yhat))) 
-
-# Proxy to time-varying volatility (h_{t}). See Koopman,Malle,Var der Wel(2010), p.342, Fig.4, Panel(B)
-sigma<-c(rep(NA,348))
-  for(i in 1:348)
-    {
-      sigma[i]<- var(as.numeric((data-results$Yhat)[i,]))
-    }
-ts.plot(sigma)
-
 # VAR(1) coeffient matrix 
 source("VARcoeff.R")
 var<-VARcoeff(betas=results$beta) # Start point to pars$phi 
 
-# Fitting the observation 348. Obs.: The VAR calculation was done on the whole sample,
-# so it would be used for forecasts on yields in observation 349.
+# It fits data 348. Obs.: I calculate the VAR coefficients matrix to the whole sample so that 
+# I can use for forecasts in observation 349, for example.
 
 betahat1 <- var[,2:5] %*% results$beta[347,]
 Yhat1 <- Z %*% betahat1
@@ -70,9 +53,6 @@ require(vars)
 var1 <- VAR(results$beta, 1, type=c("const"),season = NULL, exogen = NULL)
 var11<-summary(var1)
 var11$varresult
-
-# Start to pars$Q in Kalman-Filter-Dynamic-Nelson-Siegel
-t(chol(var11$covres)) 
 
 # Initials values for Kalman-Filter-Dynamic-Nelson-Siegel (Lyapunov equation) See Koopman,Malle,Var der Wel(2010), p.331
 # Variance matrix
@@ -93,7 +73,57 @@ dim(NSParameters)
 var2 <- VAR(NSParameters, 1, type=c("const"),season = NULL, exogen = NULL)
 var22<-summary(var2)
 
+# Proxy to time-varying volatility (h_{t}). See Koopman,Malle,Var der Wel(2010), p.342, Fig.4, Panel(B)
+sigma<-c(rep(NA,348))
+  for(i in 1:348)
+    {
+      sigma[i]<- var(as.numeric((data-results$Yhat)[i,]))
+    }
+ts.plot(sigma)
+
 # Comment:
 # There is a difference between the betas of the Package("YieldCurve") and the betas of the function Yhat.betas
 # since the Package has a "time-varying" loading parameter (lambda) for each yield curve observed, 
-# and the function has only one fixed lambda (0.0609) for all observations.
+# and the function has only one fixed lambda (0.0609 and 0.1218) for all observations.
+
+# Start point to DNSS-baseline with Kalman filter
+para<-c(rep(NA,49))
+# Start point to lambda 
+para[1]<-lambda1
+para[2]<-lambda2
+# Start point to pars$H 
+para[3:19]<-sqrt(diag(var(data-results$Yhat))) 
+# Start point to pars$phi
+para[20]<-var[1,2]
+para[21]<-var[1,3]
+para[22]<-var[1,4]
+para[23]<-var[1,5]
+para[24]<-var[2,2]
+para[25]<-var[2,3]
+para[26]<-var[2,4]
+para[27]<-var[2,5]
+para[28]<-var[3,2]
+para[29]<-var[3,3]
+para[30]<-var[3,4]
+para[31]<-var[3,5]
+para[32]<-var[4,2]
+para[33]<-var[4,3]
+para[34]<-var[4,4]
+para[35]<-var[4,5]
+# Start point to pars$mu 
+para[36]<-mean(results$beta[,1]) 
+para[37]<-mean(results$beta[,2]) 
+para[38]<-mean(results$beta[,3])
+para[39]<-mean(results$beta[,4])
+# Start to pars$Q
+QQ<-t(chol(var11$covres)) 
+para[40]<-QQ[1,1]
+para[41]<-QQ[2,1]
+para[42]<-QQ[2,2]
+para[43]<-QQ[3,1]
+para[44]<-QQ[3,2]
+para[45]<-QQ[3,3]
+para[46]<-QQ[4,1]
+para[47]<-QQ[4,2]
+para[48]<-QQ[4,3]
+para[49]<-QQ[4,4]
