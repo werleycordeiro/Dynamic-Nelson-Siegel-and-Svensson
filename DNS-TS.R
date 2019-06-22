@@ -37,7 +37,7 @@ head(results$Yhat)
 
 # VAR(1) coeffient matrix 
 source("VARcoeff.R")
-var<-VARcoeff(betas=results$beta) # Start point to pars$phi in Kalman-Filter-Dynamic-Nelson-Siegel
+var<-VARcoeff(betas=results$beta,l=l) # Start point to pars$phi in Kalman-Filter-Dynamic-Nelson-Siegel
 
 # It fits data 348. Obs.: I calculate the VAR coefficients matrix to the whole sample so that 
 # I can use for forecasts in observation 349, for example.
