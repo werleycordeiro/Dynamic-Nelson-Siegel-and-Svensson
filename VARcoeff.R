@@ -1,4 +1,4 @@
-VARcoeff<-function(betas)
+VARcoeff<-function(betas,l)
 {
   YY <-betas
   XX <- cbind(rep(1,length(betas[,1])),YY)
